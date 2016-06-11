@@ -48,6 +48,10 @@ def handle(text, mic, profile):
     """
     room = get_room(text)
     action = get_action(text)
+    if "none" == action:
+        print "Action not specified"
+        mic.say("Lights can be switched on or off. Try saying Lights on or off")
+        return
     mic.say("switching " + room + " lights " + action)
     state = LIGHT_STATES[action]
     relay = Relay()
@@ -65,8 +69,9 @@ def handle(text, mic, profile):
 def get_action(text):
     if bool(re.search(r'\bon\b', text, re.IGNORECASE)):
         return "on"
-    if bool(re.search(r'\bof\b', text, re.IGNORECASE)):
+    if bool(re.search(r'\boff\b', text, re.IGNORECASE)):
         return "off"
+    return "none"
 
 
 def isValid(text):
