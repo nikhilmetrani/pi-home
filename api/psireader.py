@@ -34,8 +34,9 @@ class PSIReader:
             return xmlvalue
         except:
             logger.error('Error', exc_info=True)
- 
-    def processXML(self,xmlvalue, regionCode, location):
+   
+    @staticmethod  
+    def processXML(xmlvalue, regionCode, location):
  
         try:
             root = etree.fromstring(xmlvalue)
