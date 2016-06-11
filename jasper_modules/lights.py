@@ -30,7 +30,7 @@ class Relay:
         GPIO.output(pin, (GPIO.HIGH if state == 0 else GPIO.LOW))
         print "Relay %s switched %s" % (lamp, ("off" if state == 0 else "on"))
 
-WORDS = ["light", "lights", "on", "off"]
+WORDS = ["LIGHT", "LIGHTS", "ON", "OFF", "LAMP", "LAMPS"]
 
 ROOM_RELAYS = {'bedroom': 0, 'kitchen': 1, 'livingroom': 2, 'bathroom': 3, 'all': 4}
 LIGHT_STATES = {'off': 0, 'on': 1}
@@ -77,8 +77,9 @@ def isValid(text):
         text -- user-input, typically transcribed speech
     """
     keywords = ["light", "lights", "lamp", "lamps"]
+    allwords = text.lower().split()
     for word in keywords:
-        if bool(re.search(r'\b' + word + '\b', text, re.IGNORECASE)):
+        if word in allwords:
             return True
     return False
 
