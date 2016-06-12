@@ -55,7 +55,7 @@ function callAPI(api,urlparam, param1, param2, param3){
         });
 }
 
-function saveSettings(api,urlparam){
+function saveSettings(){
 
     formValues = $('#settingsForm').serialize();
     console.log(formValues)
@@ -72,6 +72,40 @@ function saveSettings(api,urlparam){
         });
 }
 
+function getTrafficIncidents(){
+
+    formValues = $('#trafficForm').serialize();
+    console.log(formValues)
+    $.ajax({
+            url: '/trafficIncidents/incidents',
+            data: formValues,
+            type: 'GET',
+            success: function(response) {
+                alert(response);
+            },
+            error: function(error) {
+                alert(error);
+            }
+        });
+}
+
+function texttospeech(){
+
+formValues = $('#texttospeech').serialize();
+    console.log(formValues)
+    $.ajax({
+            url: '/texttospeech',
+            data: formValues,
+            type: 'GET',
+            success: function(response) {
+                alert(response);
+            },
+            error: function(error) {
+                alert(error);
+            }
+        });
+
+}
 
 </script>
 
@@ -166,7 +200,7 @@ function saveSettings(api,urlparam){
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title" >
-                    <a data-toggle="collapse" data-parent="#wiki" href="#home" class="glyphicon glyphicon-home"> HOME</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#home" class="glyphicon glyphicon-home"> HOME</a>
                 </h4>
             </div>
             <div id="home" class="panel-collapse collapse">
@@ -232,7 +266,62 @@ function saveSettings(api,urlparam){
             <div id="collapseThree" class="panel-collapse collapse">
                 <div class="panel-body">
 
-                    <table class="table table-striped">
+                    <div class="panel-group">
+
+                        <form class="form" id="trafficForm" role="form" onsubmit="return false">
+
+                             <div class="form-group">
+                              <label for="sel1">Incident</label>
+                              <select class="form-control" id="incidentType" name="incidentType">
+                                <option selected>Heavy Traffic</option>
+                                <option>Accident</option>
+                                <option>Diversion</option>
+                                <option>Misc</option>
+                                  <option>Obstacle</option>
+                                <option>Roadwork</option>
+                                <option>Road block</option>
+                                <option>Unattended vehicle</option>
+                                  <option>Vehicle breakdown</option>
+                                <option>Weather</option>
+                                <option></option>
+                                <option></option>
+                              </select>
+                            </div>
+
+                           <div class="form-group">
+                              <label for="sel1">on Highway:</label>
+                              <select class="form-control" id="highway" name="highway">
+                                <option selected>AYE</option>
+                                <option>BKE</option>
+                                <option>CTE</option>
+                                <option>ECP</option>
+                                <option>KPE</option>
+                                <option>KJE</option>
+                                <option>MCE</option>
+                                <option>NSE</option>
+                                 <option>ORRS</option>
+                                   <option>PIE</option>
+                                   <option>TPE</option>
+
+                              </select>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="sel1">or Around:</label>
+                              <input type="text" class="form-control" placeholder="Road Name" name="trafficRoadName">
+                            </div>
+
+
+
+                            <hr>
+                            <p>
+                            <button type="submit" class="btn btn-primary" onclick="getTrafficIncidents()">Submit</button>
+                            </p>
+                            </form>
+                  </div>
+
+
+                    <!--<table class="table table-striped">
                         <thead>
                           <tr>
                             <th>EXPRESS WAY</th>
@@ -260,7 +349,7 @@ function saveSettings(api,urlparam){
                             </tr>
 
                         </tbody>
-                      </table>
+                      </table>-->
 
                 </div>
             </div>
@@ -294,6 +383,26 @@ function saveSettings(api,urlparam){
                         <input type="text" class="form-control" placeholder="Search">
                       </div>
                       <button class="btn btn-primary" onclick="callAPI('wiki','search','search')">Wiki It !!</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#text2speechdiv" class="glyphicon glyphicon-bullhorn"> TEXT2SPEECH</a>
+                </h4>
+            </div>
+            <div id="text2speechdiv" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <form class="navbar-form navbar-left" id="texttospeech" role="search" onsubmit="return false">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Text" name="message">
+                      </div>
+                      <button class="btn btn-primary" onclick="texttospeech()">Voice It !!</button>
                     </form>
 
                 </div>
@@ -355,7 +464,7 @@ function saveSettings(api,urlparam){
 
                             <hr>
                             <p>
-                            <button type="submit" class="btn btn-primary" onclick="saveSettings('settings','save')">Submit</button>
+                            <button type="submit" class="btn btn-primary" onclick="saveSettings()">Submit</button>
                             </p>
                             </form>
                   </div>

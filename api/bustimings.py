@@ -10,7 +10,6 @@ from texttospeech import TextToSpeech
 class BusTimings:
 
     __http = urllib3.PoolManager()
-    __proxy = urllib3.ProxyManager('http://webproxy.wlb2.nam.nsroot.net:8080')
     __headers = {'AccountKey':'rvXT5s1ZSSKldpkizIhlag==','UniqueUserID':'984004a4-2685-4b30-8514-b3a75513c2bd', 'accept':'application/json'}
 
     def getBusInformation(self,busStopId, serviceNo, busStopName='Your'):
