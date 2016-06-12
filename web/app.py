@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 from api.texttospeech import TextToSpeech
 #from api import PSIReader
 from api.bustimings import BusTimings
+from api.news import get_news_by_category
 import os
 
 app = Flask(__name__)
@@ -10,6 +11,10 @@ app = Flask(__name__)
 tts = TextToSpeech()
 bustimings= BusTimings()
 #psir = PSIReader()
+
+TTS_BLUEMIX = 'TTS_BLUEMIX'
+TTS_GOOGLE = 'TTS_GOOGLE'
+WEB_SETTINGS = {'TTS_TYPE' : TTS_GOOGLE}
 
 @app.route('/')
 def index():
@@ -47,7 +52,12 @@ def home(value):
 
 @app.route('/news/<value>')
 def news(value):
-    return value
+    newsList = get_news_by_category(value)
+    for news in newsList:
+        print news
+        __playAudio('news.wav',news)
+
+    return "NEWS Done !!"
 
 @app.route('/traffic/<value>')
 def traffic(value):
@@ -65,6 +75,25 @@ def wiki(value):
 def stopVoice(value):
     os.system('pkill omxplayer')
     return 'Voice Stopped'
+
+@app.route('/settings/<value>')
+def settings(value):
+
+    print request.args
+
+    WEB_SETTINGS['TTS_TYPE'] = request.args['ttstype']
+
+    return "Settings saved !!" + request.args['ttstype']
+
+def __playAudio(filePath, text):
+
+    if WEB_SETTINGS['TTS_TYPE'] is TTS_GOOGLE:
+        tts.googleTTS(text, filePath)
+    else:
+        tts.bluemixTTS(text, filePath)
+
+    tts.play(filePath)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=5001)

@@ -2,6 +2,7 @@ import requests
 import urllib
 import time
 import os
+from email.utils import encode_rfc2231
  
 class TextToSpeech:
  
@@ -13,7 +14,8 @@ class TextToSpeech:
     def bluemixTTS(self, text, filePath):
         try:
             #print 'bluemixTTS : ' + text
-            finalText = urllib.quote(text)
+            finalText = encode_rfc2231(text, 'utf-8')
+            finalText = finalText.replace("utf-8", "")
             #print finalText
             finalurl = TextToSpeech.__blumeixTTSURL % finalText
             #print finalurl
@@ -36,7 +38,9 @@ class TextToSpeech:
         try:
 
             #print 'googleTTS : ' + text
-            finalText = urllib.quote(text)
+            finalText = encode_rfc2231(text, 'utf-8')
+            finalText = finalText.replace("utf-8", "")
+            #finalText = urllib.quote(finalText)
             #print finalText
             finalurl = TextToSpeech.__googleTTSURL % finalText
             #print finalurl
