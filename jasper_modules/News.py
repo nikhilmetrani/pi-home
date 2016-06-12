@@ -1,7 +1,8 @@
-from api import news 
+from api import news
 import re
 
-WORDS = ["NEWS","HEADLINES"]
+WORDS = ["NEWS", "HEADLINES"]
+
 
 def handle(text, mic, profile):
     """
@@ -13,11 +14,12 @@ def handle(text, mic, profile):
         profile -- contains information related to the user (e.g., phone
                    number)
     """
-  
-    allNews = news.get_all()
+    news_api = news.News()
+    allNews = news_api.get_all()
     for newsStr in allNews:
-	allNews += newsStr + " " 
+        allNews += newsStr + " "
     mic.say(allNews)
+
 
 def isValid(text):
     """
@@ -27,4 +29,3 @@ def isValid(text):
         text -- user-input, typically transcribed speech
     """
     return bool(re.search(r'\bnews\b', text, re.IGNORECASE)) or bool(re.search(r'\bheadlines\b', text, re.IGNORECASE))
-    
