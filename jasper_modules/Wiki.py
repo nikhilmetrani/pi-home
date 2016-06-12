@@ -1,9 +1,6 @@
-import wikipedia
+from api import wiki
 
 WORDS = ["WIKIPEDIA"]
-
-def search_wiki(query, sentences = 2):
-    return wikipedia.summary(query, sentences = sentences)
 
 def sanitize_query(query):    
     upper_query = query.upper()
@@ -12,7 +9,7 @@ def sanitize_query(query):
     if(idx == -1):
         idx = len(upper_query)
     sanitized_string = upper_query[0:idx]
-    return sanitized_string
+    return sanitized_string.replace("WIKIPEDIA","").strip()
 
 def handle(text, mic, profile):
     """
@@ -26,8 +23,8 @@ def handle(text, mic, profile):
         profile -- contains information related to the user (e.g., phone
                    number)
     """
-    wiki_summary = search_wiki(sanitize_query(text))
-    mic.say(wiki_summary)
+    wiki_summary = wiki.search_wiki(sanitize_query(text))
+    mic.say(wiki_summary.encode('ascii','ignore'))
 
 def isValid(text):
     """

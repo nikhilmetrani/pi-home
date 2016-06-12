@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pi Home</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .bs-example{
+        margin: 20px;
+    }
+</style>
+
+
+<script la>
+
+/*
+$(function() {
+    $('button').click(function() {
+        $.ajax({
+            url: '/'+this.id,
+            data: '',
+            type: 'GET',
+            success: function(response) {
+                alert(response);
+            },
+            error: function(error) {
+                alert(error);
+            }
+        });
+    });
+});
+*/
+
+function callAPI(api,urlparam, param1, param2, param3){
+    //alert('/'+api+'/'+urlparam);
+    $.ajax({
+            url: '/'+api+'/'+urlparam,
+            data: {
+                "param": param1,
+		"param2": param2,
+		"param3": param3
+            },
+            type: 'GET',
+            success: function(response) {
+                alert(response);
+            },
+            error: function(error) {
+                alert(error);
+            }
+        });
+
+}
+
+</script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>-->
+      <a class="navbar-brand glyphicon glyphicon-home" href="#"> PiHome</a>
+      </ul>    
+</div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <!--<ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onclick="callAPI('stopVoice','stopVoice')"><span class="glyphicon glyphicon-log-in"></span> Stop Voice</a></li>
+      </ul>
+    </div>-->
+  </div>
+</nav>
+
+<div class="container-fluid bg-3">
+
+<div class="row">
+
+    <div class="col-sm-12">
+
+    <div class="panel-group" id="accordion">
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#airquality" class="glyphicon glyphicon-scale"> AIR QUALITY</a>
+                </h4>
+            </div>
+            <div id="airquality" class="panel-collapse collapse">
+                <div class="panel-body">
+		    <h4>How is Air outside ? </h4>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rNO','Singapore North')">Check NORTH PSI</button>
+		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rEA','Singapore East')">Check EAST PSI</button>
+		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rCE','Singapore Central')">Check CENTRAL PSI</button>
+		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rWE','Singapore West')">Check WEST PSI</button>
+		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rSO','Singapore South')">Check SOUTH PSI</button>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="glyphicon glyphicon-time"> BUS TIMINGS</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p><h4>When is Next Bus?</h4></p>
+		    <button class="btn btn-lg btn-primary btn-block" type="button" id="bus9" onclick="callAPI('bus','9')">9</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="bus1" onclick="callAPI('bus','20')">20</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="bus2" onclick="callAPI('bus','12')">12</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="bus3" onclick="callAPI('bus','38')">38</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#selfpi" class="glyphicon glyphicon-camera"> CAMERA PI</a>
+                </h4>
+            </div>
+            <div id="selfpi" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('picamera','picamera')">Take a Pic !!</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title" >
+                    <a data-toggle="collapse" data-parent="#wiki" href="#home" class="glyphicon glyphicon-home"> HOME</a>
+                </h4>
+            </div>
+            <div id="home" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>SWITCH</th>
+                            <th>ON</th>
+                            <th>OFF</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>Living Room Light</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','1','ON')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','1','OFF')">OFF</button></td>
+                          </tr>
+                          <tr>
+                            <th>Master Bed Room Light</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','2','ON')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','2','OFF')">OFF</button></td>
+                          </tr>
+                            <tr>
+                            <th>Common Room 1 Light</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','3','ON')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','3','OFF')">OFF</button></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#news" class="glyphicon glyphicon-blackboard"> NEWS</a>
+                </h4>
+            </div>
+            <div id="news" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('news','news')">What is in News?</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title ">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="glyphicon glyphicon-road"> TRAFFIC INSIDENTS</a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>EXPRESS WAY</th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>PIE</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','PIE','Accidents')">Accidents</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','PIE','Heavy Traffic')">Traffic</button></td>
+                          </tr>
+
+                            <tr>
+                            <th>TPE</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','TPE','Accidents')">Accidents</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','TPE','Traffic')">Traffic</button></td>
+                            </tr>
+
+                            <tr>
+                            <th>MCE</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','MCE','Accidents')">Accidents</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','MCE','Heavy Traffic')">Heavy Traffic</button></td>
+                            </tr>
+
+                        </tbody>
+                      </table>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title" >
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="glyphicon glyphicon-cloud"> WEATHER</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('weather','24hrs','weather')">How is it Outside?</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#wiki" class="glyphicon glyphicon-globe"> WIKI</a>
+                </h4>
+            </div>
+            <div id="wiki" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <div class="form-group has-success has-feedback">
+
+                      <div class="col-lg-6">
+                        <input type="text" class="form-control" id="inputSuccess" maxlength="15" max="15">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      </div>
+                    </div>
+                    <br>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('wiki','search','search')">Wikit It !!</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--<p><strong>Note:</strong> Click on the linked heading text to expand or collapse accordion panels.</p>-->
+</div>
+
+    </div>
+
+</div>
+
+<footer class="footer">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+            <p class="text-muted">NUS-ISS - IOT - SE23PT - 2016.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>                                                                             
