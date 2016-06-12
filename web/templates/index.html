@@ -53,8 +53,25 @@ function callAPI(api,urlparam, param1, param2, param3){
                 alert(error);
             }
         });
-
 }
+
+function saveSettings(api,urlparam){
+
+    formValues = $('#settingsForm').serialize();
+    console.log(formValues)
+    $.ajax({
+            url: '/settings/save',
+            data: formValues,
+            type: 'GET',
+            success: function(response) {
+                alert(response);
+            },
+            error: function(error) {
+                alert(error);
+            }
+        });
+}
+
 
 </script>
 
@@ -103,12 +120,12 @@ function callAPI(api,urlparam, param1, param2, param3){
             </div>
             <div id="airquality" class="panel-collapse collapse">
                 <div class="panel-body">
-		    <h4>How is Air outside ? </h4>
-                    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rNO','Singapore North')">Check NORTH PSI</button>
-		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rEA','Singapore East')">Check EAST PSI</button>
-		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rCE','Singapore Central')">Check CENTRAL PSI</button>
-		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rWE','Singapore West')">Check WEST PSI</button>
-		    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality" onclick="callAPI('airquality','rSO','Singapore South')">Check SOUTH PSI</button>
+		             <h4>How is Air outside ? </h4>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality5" onclick="callAPI('airquality','rNO','Singapore North')">Check NORTH PSI</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality1" onclick="callAPI('airquality','rEA','Singapore East')">Check EAST PSI</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality2" onclick="callAPI('airquality','rCE','Singapore Central')">Check CENTRAL PSI</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality3" onclick="callAPI('airquality','rWE','Singapore West')">Check WEST PSI</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" id="airquality4" onclick="callAPI('airquality','rSO','Singapore South')">Check SOUTH PSI</button>
 
                 </div>
             </div>
@@ -141,7 +158,7 @@ function callAPI(api,urlparam, param1, param2, param3){
             </div>
             <div id="selfpi" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('picamera','picamera')">Take a Pic !!</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('picamera','picamera')">Take a Pic !!</button>
                 </div>
             </div>
         </div>
@@ -166,18 +183,18 @@ function callAPI(api,urlparam, param1, param2, param3){
                         <tbody>
                           <tr>
                             <th>Living Room Light</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','1','ON')">ON</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','1','OFF')">OFF</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','1','ON')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','1','OFF')">OFF</button></td>
                           </tr>
                           <tr>
                             <th>Master Bed Room Light</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','2','ON')">ON</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','2','OFF')">OFF</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('home','2','ON')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('home','2','OFF')">OFF</button></td>
                           </tr>
                             <tr>
                             <th>Common Room 1 Light</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','3','ON')">ON</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('home','3','OFF')">OFF</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','3','ON')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','3','OFF')">OFF</button></td>
                           </tr>
                         </tbody>
                       </table>
@@ -193,7 +210,14 @@ function callAPI(api,urlparam, param1, param2, param3){
             </div>
             <div id="news" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('news','news')">What is in News?</button>
+                    <p><h4>Whatz in News?</h4></p>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('news','Business')">Business</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('news','Entertainment')">Entertainment</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('news','Politics')">Politics</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('news','ScienceAndTechnology')">ScienceAndTechnology</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('news','Sports')">Sports</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('news','World')">World</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('news','trendingtopics')">Trending</button>
                 </div>
             </div>
         </div>
@@ -219,20 +243,20 @@ function callAPI(api,urlparam, param1, param2, param3){
                         <tbody>
                           <tr>
                             <th>PIE</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','PIE','Accidents')">Accidents</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','PIE','Heavy Traffic')">Traffic</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('traffic','PIE','Accidents')">Accidents</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('traffic','PIE','Heavy Traffic')">Traffic</button></td>
                           </tr>
 
                             <tr>
                             <th>TPE</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','TPE','Accidents')">Accidents</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','TPE','Traffic')">Traffic</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('traffic','TPE','Accidents')">Accidents</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('traffic','TPE','Traffic')">Traffic</button></td>
                             </tr>
 
                             <tr>
                             <th>MCE</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','MCE','Accidents')">Accidents</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('traffic','MCE','Heavy Traffic')">Heavy Traffic</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('traffic','MCE','Accidents')">Accidents</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('traffic','MCE','Heavy Traffic')">Heavy Traffic</button></td>
                             </tr>
 
                         </tbody>
@@ -251,7 +275,7 @@ function callAPI(api,urlparam, param1, param2, param3){
             </div>
             <div id="collapseTwo" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('weather','24hrs','weather')">How is it Outside?</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('weather','24hrs','weather')">How is it Outside?</button>
                 </div>
             </div>
         </div>
@@ -265,15 +289,77 @@ function callAPI(api,urlparam, param1, param2, param3){
             <div id="wiki" class="panel-collapse collapse">
                 <div class="panel-body">
 
-                    <div class="form-group has-success has-feedback">
-
-                      <div class="col-lg-6">
-                        <input type="text" class="form-control" id="inputSuccess" maxlength="15" max="15">
-                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    <form class="navbar-form navbar-left" id="wikiForm" role="search" onsubmit="return false">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
                       </div>
-                    </div>
-                    <br>
-                    <button class="btn btn-lg btn-primary btn-block" type="button" id="selfpi" onclick="callAPI('wiki','search','search')">Wikit It !!</button>
+                      <button class="btn btn-primary" onclick="callAPI('wiki','search','search')">Wiki It !!</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#settings" class="glyphicon glyphicon-cog"> SETTINGS</a>
+                </h4>
+            </div>
+            <div id="settings" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <div class="panel-group">
+
+                            <form class="form" id="settingsForm" role="form" onsubmit="return false">
+
+                            <div class="panel panel-primary">
+                              <div class="panel-heading">Voice</div>
+                              <div class="panel-body">
+
+                                  <div class="checkbox">
+                                    <label><input type="radio" name="ttstype" value="TTS_GOOGLE" checked="checked"> Google</label>
+                                  </div>
+
+                                  <div class="checkbox">
+                                    <label><input type="radio" name="ttstype" value="TTS_BLUEMIX"> IBM BlueMix</label>
+                                  </div>
+
+                              </div>
+                            </div>
+
+                            <!--<div class="panel panel-primary">
+                              <div class="panel-heading">Panel Header</div>
+                              <div class="panel-body">
+
+                                  <div class="form-group">
+                                    <label for="email">Email address:</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="pwd">Password:</label>
+                                    <input type="password" class="form-control" id="pwd" name="pwd">
+                                  </div>
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" name="remme"> Remember me</label>
+                                  </div>
+
+                              </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                              <div class="panel-heading">Panel Header</div>
+                              <div class="panel-body">Panel Content</div>
+                            </div>
+                                -->
+
+                            <hr>
+                            <p>
+                            <button type="submit" class="btn btn-primary" onclick="saveSettings('settings','save')">Submit</button>
+                            </p>
+                            </form>
+                  </div>
+
                 </div>
             </div>
         </div>

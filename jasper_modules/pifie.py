@@ -5,6 +5,7 @@ import picamera
 from PIL import Image
 import time
 from time import strftime
+import os
 
 WORDS = ["CAMERA"]
 
@@ -21,7 +22,8 @@ def handle(text, mic, profile):
                    number)
     """
     dateTimeStr = strftime("%Y%m%d%H%M%S")
-    fileName =  profile['temp_folder'] + dateTimeStr + ".jpg"
+    fileName =  profile['pi_paths']['picam'] + dateTimeStr + ".jpg"
+    latest_sym = profile['latest_jpg']
     camera = picamera.PiCamera()
     message = "Taking Pifie. Say  Cheese "
     mic.say(message)
@@ -32,11 +34,14 @@ def handle(text, mic, profile):
 
     image = Image.open(fileName)
     image.show()
-    time.sleep(3)
+    time.sleep(2)
     message = "You are looking fantastic today :)  "
     mic.say(message)
     time.sleep(1)
     image.close()
+    if os.path.islink(latest_sym):
+        os.unlink(latest_sym)
+    os.symlink(fileName,latest_sym)
 
 def isValid(text):
     """
