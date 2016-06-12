@@ -13,7 +13,7 @@ class TextToSpeech:
     
     def bluemixTTS(self, text, filePath):
         try:
-            #print 'bluemixTTS : ' + text
+            print 'bluemixTTS : ' + text
             finalText = encode_rfc2231(text, 'utf-8')
             finalText = finalText.replace("utf-8", "")
             #print finalText
@@ -37,7 +37,7 @@ class TextToSpeech:
     def googleTTS(self,text, filePath):
         try:
 
-            #print 'googleTTS : ' + text
+            print 'googleTTS : ' + text
             finalText = encode_rfc2231(text, 'utf-8')
             finalText = finalText.replace("utf-8", "")
             #finalText = urllib.quote(finalText)

@@ -1,16 +1,21 @@
 __author__ = 'jagadeesh'
+from os import path
+import sys
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from flask import Flask, render_template, request
 from api.texttospeech import TextToSpeech
-#from api import PSIReader
+from api.psireader import PSIReader
 from api.bustimings import BusTimings
 from api.news import get_news_by_category
+from api.traffic import Traffic
 import os
 
 app = Flask(__name__)
 
 tts = TextToSpeech()
 bustimings= BusTimings()
-#psir = PSIReader()
+traffic = Traffic()
+psir = PSIReader()
 
 TTS_BLUEMIX = 'TTS_BLUEMIX'
 TTS_GOOGLE = 'TTS_GOOGLE'
@@ -23,13 +28,12 @@ def index():
 @app.route('/airquality/<value>')
 def airquality(value):
     text = value
-    '''
+
     text = psir.getPSIMessage(value, request.args['param'])
     audioFile = 'psi.wav'
-    tts.bluemixTTS(text, audioFile)
-    #tts.googleTTS(text, audioFile)
+    __playAudio(audioFile,text)
     tts.play(audioFile)
-    '''
+
     return text
 
 
@@ -37,9 +41,7 @@ def airquality(value):
 def bus(value):
     text = bustimings.getBusInformation(96129, value, busStopName='Your')
     audioFile = 'bustimings.wav'
-    tts.bluemixTTS(text, audioFile)
-    #tts.googleTTS(text, audioFile)
-    tts.play(audioFile)
+    __playAudio(audioFile,text)
     return text    
 
 @app.route('/picamera/<value>')
@@ -53,15 +55,28 @@ def home(value):
 @app.route('/news/<value>')
 def news(value):
     newsList = get_news_by_category(value)
-    for news in newsList:
-        print news
-        __playAudio('news.wav',news)
+    for text in newsList:
+        #print news
+        __playAudio('news.wav',text)
 
     return "NEWS Done !!"
 
-@app.route('/traffic/<value>')
-def traffic(value):
-    return '%s %s' % (value, request.args['param'])
+@app.route('/trafficIncidents/<value>')
+def trafficIncidents(value):
+
+
+    trafficRoadName = request.args['trafficRoadName']
+    searchKey = ''
+    if trafficRoadName:
+        searchKey = trafficRoadName
+    else:
+        searchKey = request.args['highway']
+
+    #print searchKey
+    audioFile = 'trafficInc.wav'
+    text = traffic.getTraficUpdates(request.args['incidentType'], searchKey)
+    __playAudio(audioFile,text)
+    return text
 
 @app.route('/weather/<value>')
 def weather(value):
@@ -78,12 +93,17 @@ def stopVoice(value):
 
 @app.route('/settings/<value>')
 def settings(value):
-
-    print request.args
-
+    #print request.args
     WEB_SETTINGS['TTS_TYPE'] = request.args['ttstype']
+    return "Settings saved !!"
 
-    return "Settings saved !!" + request.args['ttstype']
+@app.route('/texttospeech')
+def texttospeech():
+    text = request.args['message']
+    audioFile = 'texttospeech.wav'
+    __playAudio(audioFile,text)
+    return "Played your Text !!"
+
 
 def __playAudio(filePath, text):
 
