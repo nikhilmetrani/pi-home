@@ -11,30 +11,16 @@
 #        Switch 2:    18 (GPIO 24)
 #        Switch 3:    22 (GPIO 25)
 
-import RPi.GPIO as GPIO
 import sys
 import random
 import re
 from client import jasperpath
-
-
-class Relay:
-    def __init__(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        self.pinList = [22,23,24,25]
-
-    def switch(self, lamp, state):
-        pin = self.pinList[lamp]
-        GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, (GPIO.HIGH if state == 0 else GPIO.LOW))
-        print "Relay %s switched %s" % (lamp, ("off" if state == 0 else "on"))
+from api import lightcontroller as lc
 
 WORDS = ["LIGHT", "LIGHTS", "ON", "OFF", "LAMP", "LAMPS"]
 
-ROOM_RELAYS = {'bedroom': 0, 'kitchen': 1, 'livingroom': 2, 'bathroom': 3, 'all': 4}
-LIGHT_STATES = {'off': 0, 'on': 1}
-
+ROOM_RELAYS = {'bedroom': lc.Room.Bedroom, 'livingroom': lc.Room.Livingroom, 'bathroom': lc.Room.Bathroom, 'kitchen': lc.Room.Kitchen, 'all': 4}
+LIGHT_STATES = {'off': lc.LightState.off, 'on': lc.LightState.on}
 
 def handle(text, mic, profile):
     """
@@ -54,16 +40,15 @@ def handle(text, mic, profile):
         return
     mic.say("switching " + room + " lights " + action)
     state = LIGHT_STATES[action]
-    relay = Relay()
     if 'all' == room:
         rooms = list(ROOM_RELAYS.keys())
         for roomname in rooms:
             if 'all' != roomname:
                 lamp = ROOM_RELAYS[roomname]
-                relay.switch(lamp, state)
+                lc.LIGHTS[lamp].switch(state)
     else:
         lamp = ROOM_RELAYS[room]
-        relay.switch(lamp, state)
+        lc.LIGHTS[lamp].switch(state)
 
 
 def get_action(text):
