@@ -28,13 +28,13 @@ def handle(text, mic, profile):
 
         if "twenty" in lowerCaseText:
             busInt = 20
-        elif "thrity eight" in lowerCaseText:
+        elif "thirty eight" in lowerCaseText:
             busInt = 38
         elif "nine" in lowerCaseText:
             busInt = 9
         elif "twelve" in lowerCaseText:
             busInt = 12
-        else
+        else:
             busInt = 0
 
         response = bus.getBusInformation(busStopId, busInt, 'Your')
