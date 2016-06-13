@@ -1,12 +1,12 @@
-from api import news
+from api import twitter 
 import re
 
-WORDS = ["NEWS", "HEADLINES"]
+WORDS = ["TWEET", "TWITTER", "UPLOAD"]
 
 
 def handle(text, mic, profile):
     """
-    Responsible to read the News Headlines 
+    Responsible to upload image file to twitter 
 
     Arguments:
         text -- user-input, typically transcribed speech
@@ -14,11 +14,11 @@ def handle(text, mic, profile):
         profile -- contains information related to the user (e.g., phone
                    number)
     """
-    news_api = news.News()
-    allNews = news_api.get_all()
-    for newsStr in allNews:
-        allNews += newsStr + " "
-    mic.say(allNews)
+    message = "Uploading image to Twitter" 
+    mic.say(message)
+    lastImage = profile['latest_jpg']
+    message = twitter.uploadToTwitter(lastImage, profile)
+    mic.say(message)
 
 
 def isValid(text):
@@ -28,4 +28,4 @@ def isValid(text):
         Arguments:
         text -- user-input, typically transcribed speech
     """
-    return bool(re.search(r'\bnews\b', text, re.IGNORECASE)) or bool(re.search(r'\bheadlines\b', text, re.IGNORECASE))
+    return bool(re.search(r'\btweet\b', text, re.IGNORECASE)) or bool(re.search(r'\btwitter\b', text, re.IGNORECASE)) or bool(re.search(r'\bupload\b', text, re.IGNORECASE))

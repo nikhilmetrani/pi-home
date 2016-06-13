@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 from api.texttospeech import TextToSpeech
 from api.psireader import PSIReader
 from api.bustimings import BusTimings
-from api.news import get_news_by_category
+from api.news import News
 from api.traffic import Traffic
 import os
 
@@ -51,7 +51,8 @@ def home(value):
 
 @app.route('/news/<value>')
 def news(value):
-    newsList = get_news_by_category(value)
+    news = News()
+    newsList = news.get_news_by_category(value)
     for text in newsList:
         #print news
         __playAudio('news.wav',text)
