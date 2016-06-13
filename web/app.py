@@ -28,12 +28,9 @@ def index():
 @app.route('/airquality/<value>')
 def airquality(value):
     text = value
-
     text = psir.getPSIMessage(value, request.args['param'])
     audioFile = 'psi.wav'
     __playAudio(audioFile,text)
-    tts.play(audioFile)
-
     return text
 
 
