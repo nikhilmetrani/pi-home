@@ -29,7 +29,7 @@ $(function() {
                 alert(response);
             },
             error: function(error) {
-                alert(error);
+                onError(error);
             }
         });
     });
@@ -42,15 +42,15 @@ function callAPI(api,urlparam, param1, param2, param3){
             url: '/'+api+'/'+urlparam,
             data: {
                 "param": param1,
-		"param2": param2,
-		"param3": param3
+		        "param2": param2,
+		        "param3": param3
             },
             type: 'GET',
             success: function(response) {
                 alert(response);
             },
             error: function(error) {
-                alert(error);
+                onError(error);
             }
         });
 }
@@ -58,7 +58,7 @@ function callAPI(api,urlparam, param1, param2, param3){
 function saveSettings(){
 
     formValues = $('#settingsForm').serialize();
-    console.log(formValues)
+    //console.log(formValues)
     $.ajax({
             url: '/settings/save',
             data: formValues,
@@ -67,7 +67,7 @@ function saveSettings(){
                 alert(response);
             },
             error: function(error) {
-                alert(error);
+                onError(error);
             }
         });
 }
@@ -75,7 +75,7 @@ function saveSettings(){
 function getTrafficIncidents(){
 
     formValues = $('#trafficForm').serialize();
-    console.log(formValues)
+    //console.log(formValues)
     $.ajax({
             url: '/trafficIncidents/incidents',
             data: formValues,
@@ -84,7 +84,7 @@ function getTrafficIncidents(){
                 alert(response);
             },
             error: function(error) {
-                alert(error);
+                onError(error);
             }
         });
 }
@@ -92,7 +92,7 @@ function getTrafficIncidents(){
 function texttospeech(){
 
 formValues = $('#texttospeech').serialize();
-    console.log(formValues)
+    //console.log(formValues)
     $.ajax({
             url: '/texttospeech',
             data: formValues,
@@ -101,9 +101,43 @@ formValues = $('#texttospeech').serialize();
                 alert(response);
             },
             error: function(error) {
-                alert(error);
+                onError(error);
             }
         });
+}
+
+function wikiSearch(){
+
+    wikiText = $('#wikiSearchText').val();
+
+    //alert(wikiText)
+
+    if(wikiText!= null  && wikiText.trim().length > 0)
+    {
+        $.ajax({
+            url: '/wiki/'+wikiText,
+            type: 'GET',
+            success: function(response) {
+                alert(response);
+            },
+            error: function(error) {
+                onError(error);
+            }
+        });
+    }
+}
+
+function onError(error){
+    console.log(error);
+    alert("Try Again !!");
+}
+
+function togglePiPicModel(){
+
+    img = "<img src='static/current.jpg?v="+new Date().getTime()+"' width='100%' height='100%'>";
+    $("#pipicDiv").empty();
+    $('#pipicDiv').append(img);
+    $('#piPicModel').modal('show');
 
 }
 
@@ -193,6 +227,7 @@ formValues = $('#texttospeech').serialize();
             <div id="selfpi" class="panel-collapse collapse">
                 <div class="panel-body">
                     <button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('picamera','picamera')">Take a Pic !!</button>
+                    <hr><button type="button" class="btn btn-default btn-sm" onclick="togglePiPicModel()">View</button>
                 </div>
             </div>
         </div>
@@ -364,7 +399,8 @@ formValues = $('#texttospeech').serialize();
             </div>
             <div id="collapseTwo" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('weather','24hrs','weather')">How is it Outside?</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('weather','TODAY','TODAY')">How is it Outside?</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('weather','TOMORROW','TOMORROW')">Tomorrow?</button>
                 </div>
             </div>
         </div>
@@ -380,9 +416,9 @@ formValues = $('#texttospeech').serialize();
 
                     <form class="navbar-form navbar-left" id="wikiForm" role="search" onsubmit="return false">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="wikiSearchText" id="wikiSearchText">
                       </div>
-                      <button class="btn btn-primary" onclick="callAPI('wiki','search','search')">Wiki It !!</button>
+                      <button class="btn btn-primary" onclick="wikiSearch()">Wiki It !!</button>
                     </form>
 
                 </div>
@@ -478,6 +514,27 @@ formValues = $('#texttospeech').serialize();
 </div>
 
     </div>
+
+
+<div id="piPicModel" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">SelfPi</h4>
+      </div>
+      <div class="modal-body" id="pipicDiv">
+            <img src="static/current.jpg" width="100%" height="100%">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 </div>
 

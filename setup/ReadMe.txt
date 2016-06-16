@@ -5,3 +5,7 @@ web:
 
     # instal six only if needed used in BusTimings module for dateutil
     sudo pip install six
+    sudo pip install wikipedia
+
+    #to kill process holding port
+    sudo netstat -nlp | grep :5001

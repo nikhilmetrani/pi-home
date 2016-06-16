@@ -8,6 +8,8 @@ from api.psireader import PSIReader
 from api.bustimings import BusTimings
 from api.news import News
 from api.traffic import Traffic
+from api.wiki import search_wiki
+from api.weather import Weather
 import os
 
 app = Flask(__name__)
@@ -16,6 +18,7 @@ tts = TextToSpeech()
 bustimings= BusTimings()
 traffic = Traffic()
 psir = PSIReader()
+weatherObj = Weather()
 
 TTS_BLUEMIX = 'TTS_BLUEMIX'
 TTS_GOOGLE = 'TTS_GOOGLE'
@@ -62,7 +65,6 @@ def news(value):
 @app.route('/trafficIncidents/<value>')
 def trafficIncidents(value):
 
-
     trafficRoadName = request.args['trafficRoadName']
     searchKey = ''
     if trafficRoadName:
@@ -78,11 +80,21 @@ def trafficIncidents(value):
 
 @app.route('/weather/<value>')
 def weather(value):
-    return '%s %s' % (value, request.args['param'])
+    text = 'No updates'
+    if value == 'TODAY':
+        text = weatherObj.get_today_text()
+    elif value == 'TOMORROW':
+        text = weatherObj.get_tomo_text()
+    audioFile = 'weather.wav'
+    __playAudio(audioFile,text)
+    return text
 
 @app.route('/wiki/<value>')
 def wiki(value):
-    return value
+    text = search_wiki(value)
+    audioFile = 'wiki.wav'
+    __playAudio(audioFile,text)
+    return text
 
 @app.route('/stopVoice/<value>')
 def stopVoice(value):
@@ -115,4 +127,3 @@ def __playAudio(filePath, text):
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=5001)
-
