@@ -252,18 +252,23 @@ function togglePiPicModel(){
                         <tbody>
                           <tr>
                             <th>Living Room Light</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','1','ON')">ON</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','1','OFF')">OFF</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','livingroom','on')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','livingroom','off')">OFF</button></td>
                           </tr>
                           <tr>
                             <th>Master Bed Room Light</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('home','2','ON')">ON</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('home','2','OFF')">OFF</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('home','bedroom','on')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button" onclick="callAPI('home','bedroom','off')">OFF</button></td>
+                          </tr>
+                          <tr>
+                            <th>Kitchen Light</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','kitchen','on')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','kitchen','off')">OFF</button></td>
                           </tr>
                             <tr>
-                            <th>Common Room 1 Light</th>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','3','ON')">ON</button></td>
-                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','3','OFF')">OFF</button></td>
+                            <th>Bath Room Light</th>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','bathroom','on')">ON</button></td>
+                            <td><button class="btn btn-lg btn-primary btn-block" type="button"  onclick="callAPI('home','bathroom','off')">OFF</button></td>
                           </tr>
                         </tbody>
                       </table>
@@ -500,7 +505,7 @@ function togglePiPicModel(){
 
                             <hr>
                             <p>
-                            <button type="submit" class="btn btn-primary" onclick="saveSettings()">Submit</button>
+                            <button type="submit" class="btn btn-primary" onclick="saveSettings()">Save</button>
                             </p>
                             </form>
                   </div>

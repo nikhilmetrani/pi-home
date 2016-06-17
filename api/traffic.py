@@ -30,7 +30,7 @@ class Traffic:
                 break
             totalRecordsCount = totalRecordsCount + resultCount
             for item in incidentSet:
-                print item
+                #print item
                 if (type in item['Type']) and (searchKey.lower() in item['Message'].lower()):
                         insidentCount = insidentCount + 1
                         insidentMessage = item['Message']

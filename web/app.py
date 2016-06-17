@@ -10,6 +10,8 @@ from api.news import News
 from api.traffic import Traffic
 from api.wiki import search_wiki
 from api.weather import Weather
+from api.piCam import captureAndUpdateLink
+from api import lightcontroller as lc
 import os
 
 app = Flask(__name__)
@@ -23,6 +25,14 @@ weatherObj = Weather()
 TTS_BLUEMIX = 'TTS_BLUEMIX'
 TTS_GOOGLE = 'TTS_GOOGLE'
 WEB_SETTINGS = {'TTS_TYPE' : TTS_GOOGLE}
+
+piImg =  '/home/pi/homepi/cam.jpg'
+piImgSl = '/home/pi/workspace/piHome/web/static/current.jpg'
+
+piPicPreAlert = 'Taking Picture 1 2 3 Go'
+
+ROOM_RELAYS = {'bedroom': lc.Room.Bedroom, 'livingroom': lc.Room.Livingroom, 'bathroom': lc.Room.Bathroom, 'kitchen': lc.Room.Kitchen, 'all': 4}
+LIGHT_STATES = {'off': lc.LightState.off, 'on': lc.LightState.on}
 
 @app.route('/')
 def index():
@@ -46,11 +56,25 @@ def bus(value):
 
 @app.route('/picamera/<value>')
 def camerapi(value):
-    return value
+    __playAudio('pipicprealert.wav',piPicPreAlert)
+    text = captureAndUpdateLink(piImg, piImgSl)
+    audioFile = 'picam.wav'
+    __playAudio(audioFile,text)
+    return text
 
 @app.route('/home/<value>')
 def home(value):
-    return value + request.args['param']
+
+    switchONOFF = request.args['param']
+
+    state = LIGHT_STATES[switchONOFF]
+    lamp = ROOM_RELAYS[value]
+    lc.LIGHTS[lamp].switch(state)
+
+    text = 'Switch %s %s light. ' % (switchONOFF, value)
+    audioFile = 'home.wav'
+    __playAudio(audioFile,text)
+    return text.upper();
 
 @app.route('/news/<value>')
 def news(value):
